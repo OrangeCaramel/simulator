@@ -18,6 +18,17 @@ defmodule SimulatorTest do
     assert Simulator.report(simulator) == %{x: 0, y: 0, face: "NORTH"}
   end
 
+  test "ignores placement of robot when its out of bounds", %{
+    simulator: simulator
+  } do
+    Simulator.place(simulator, {-1, 0, "NORTH"})
+    assert Simulator.report(simulator) == :noop
+
+    Simulator.place(simulator, {0, 0, "NORTH"})
+    Simulator.place(simulator, {0, 5, "NORTH"})
+    assert Simulator.report(simulator) == %{x: 0, y: 0, face: "NORTH"}
+  end
+
   test "correct robot vector after one right rotation", %{simulator: simulator} do
     Simulator.place(simulator, {0, 0, "NORTH"})
     Simulator.rotate(simulator, "right")

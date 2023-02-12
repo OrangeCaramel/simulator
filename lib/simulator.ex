@@ -39,10 +39,14 @@ defmodule Simulator do
 
   def handle_call({:place, {x, y, face}}, _from, state) do
     new_robot_state = %{x: x, y: y, face: face}
-    Robot.update(state.robot, new_robot_state)
 
-    new_state = Map.put(state, :is_robot_placed, true)
-    {:reply, :ok, new_state}
+    if is_move_valid?(new_robot_state) do
+      Robot.update(state.robot, new_robot_state)
+      new_state = Map.put(state, :is_robot_placed, true)
+      {:reply, :ok, new_state}
+    else
+      {:reply, :noop, state}
+    end
   end
 
   def handle_call({command, _}, _from, state)
