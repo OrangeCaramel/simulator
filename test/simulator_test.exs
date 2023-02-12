@@ -24,7 +24,7 @@ defmodule SimulatorTest do
     assert Simulator.report(simulator) == %{x: 0, y: 0, face: "EAST"}
   end
 
-  test "correct robot vector after 4 right rotation", %{simulator: simulator} do
+  test "correct robot vector after 4 right rotations", %{simulator: simulator} do
     Simulator.place(simulator, {0, 0, "NORTH"})
     Simulator.rotate(simulator, "right")
     Simulator.rotate(simulator, "right")
@@ -39,7 +39,7 @@ defmodule SimulatorTest do
     assert Simulator.report(simulator) == %{x: 0, y: 0, face: "WEST"}
   end
 
-  test "correct robot vector after 4 left rotation", %{simulator: simulator} do
+  test "correct robot vector after 4 left rotations", %{simulator: simulator} do
     Simulator.place(simulator, {0, 0, "NORTH"})
 
     Simulator.rotate(simulator, "left")
@@ -47,5 +47,29 @@ defmodule SimulatorTest do
     Simulator.rotate(simulator, "left")
     Simulator.rotate(simulator, "left")
     assert Simulator.report(simulator) == %{x: 0, y: 0, face: "NORTH"}
+  end
+
+  test "correct robot vector after one move to the north", %{simulator: simulator} do
+    Simulator.place(simulator, {0, 0, "NORTH"})
+    Simulator.move(simulator)
+    assert Simulator.report(simulator) == %{x: 0, y: 1, face: "NORTH"}
+  end
+
+  test "correct robot vector after one move to the south", %{simulator: simulator} do
+    Simulator.place(simulator, {4, 4, "SOUTH"})
+    Simulator.move(simulator)
+    assert Simulator.report(simulator) == %{x: 4, y: 3, face: "SOUTH"}
+  end
+
+  test "correct robot vector after one move to the east", %{simulator: simulator} do
+    Simulator.place(simulator, {2, 2, "EAST"})
+    Simulator.move(simulator)
+    assert Simulator.report(simulator) == %{x: 3, y: 2, face: "EAST"}
+  end
+
+  test "correct robot vector after one move to the west", %{simulator: simulator} do
+    Simulator.place(simulator, {2, 2, "WEST"})
+    Simulator.move(simulator)
+    assert Simulator.report(simulator) == %{x: 1, y: 2, face: "WEST"}
   end
 end

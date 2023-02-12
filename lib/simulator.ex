@@ -70,4 +70,26 @@ defmodule Simulator do
 
     {:reply, :ok, state}
   end
+
+  def handle_call({:move, _}, _from, state) do
+    current_robot_state = Robot.report(state.robot)
+
+    new_robot_state =
+      case current_robot_state.face do
+        "NORTH" -> Map.put(current_robot_state, :y, current_robot_state.y + @robot_speed)
+        "SOUTH" -> Map.put(current_robot_state, :y, current_robot_state.y - @robot_speed)
+        "EAST" -> Map.put(current_robot_state, :x, current_robot_state.x + @robot_speed)
+        "WEST" -> Map.put(current_robot_state, :x, current_robot_state.x - @robot_speed)
+      end
+
+    if is_move_valid?(new_robot_state) do
+      Robot.update(state.robot, new_robot_state)
+      {:reply, :ok, state}
+    else
+      {:reply, :noop, state}
+    end
+  end
+
+  defp is_move_valid?(%{x: x, y: y}),
+    do: x >= @min_x and x < @max_x and y >= @min_y and y < @max_y
 end
