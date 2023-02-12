@@ -11,7 +11,7 @@ defmodule RobotTest do
 
   test "updates state", %{robot: robot} do
     assert Robot.report(robot) == %{}
-    Robot.update(robot, %{x: 0, y: 0, face: 0})
-    assert Robot.report(robot) == %{x: 0, y: 0, face: 0}
+    Robot.update(robot, %{x: 0, y: 0, face: "NORTH"})
+    assert Robot.report(robot) == %{x: 0, y: 0, face: "NORTH"}
   end
 end
