@@ -28,4 +28,20 @@ defmodule SimulatorTest do
     Simulator.rotate(simulator, "right")
     assert Simulator.report(simulator) == %{x: 0, y: 0, face: "NORTH"}
   end
+
+  test "correct robot vector after one left rotation", %{simulator: simulator} do
+    Simulator.place(simulator, {0, 0, "NORTH"})
+    Simulator.rotate(simulator, "left")
+    assert Simulator.report(simulator) == %{x: 0, y: 0, face: "WEST"}
+  end
+
+  test "correct robot vector after 4 left rotation", %{simulator: simulator} do
+    Simulator.place(simulator, {0, 0, "NORTH"})
+
+    Simulator.rotate(simulator, "left")
+    Simulator.rotate(simulator, "left")
+    Simulator.rotate(simulator, "left")
+    Simulator.rotate(simulator, "left")
+    assert Simulator.report(simulator) == %{x: 0, y: 0, face: "NORTH"}
+  end
 end
