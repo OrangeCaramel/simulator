@@ -1,6 +1,8 @@
 defmodule Simulator do
   use GenServer
 
+  @min_x 0
+  @min_y 0
   @max_x 5
   @max_y 5
   @robot_speed 1
@@ -16,16 +18,16 @@ defmodule Simulator do
     GenServer.call(pid, {:place, placement})
   end
 
-  # def move(pid) do
-  #   GenServer.call(pid, :move)
-  # end
+  def move(pid) do
+    GenServer.call(pid, {:move, nil})
+  end
 
   def rotate(pid, direction) do
     GenServer.call(pid, {:rotate, direction})
   end
 
   def report(pid) do
-    GenServer.call(pid, :report)
+    GenServer.call(pid, {:report, nil})
   end
 
   # Server
@@ -43,11 +45,11 @@ defmodule Simulator do
     {:reply, :ok, new_state}
   end
 
-  def handle_call(command, _from, state)
+  def handle_call({command, _}, _from, state)
       when not state.is_robot_placed and command in [:report, :rotate, :move],
-      do: {:reply, :error, state}
+      do: {:reply, :noop, state}
 
-  def handle_call(:report, _from, state) do
+  def handle_call({:report, _}, _from, state) do
     {:reply, Robot.report(state.robot), state}
   end
 

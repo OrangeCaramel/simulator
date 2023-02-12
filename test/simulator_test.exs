@@ -5,8 +5,12 @@ defmodule SimulatorTest do
     %{simulator: start_supervised!(Simulator)}
   end
 
-  test "returns error when robot reports before being placed", %{simulator: simulator} do
-    assert Simulator.report(simulator) == :error
+  test "does nothing when a command is called before robot is placed", %{
+    simulator: simulator
+  } do
+    assert Simulator.report(simulator) == :noop
+    assert Simulator.rotate(simulator, "left") == :noop
+    assert Simulator.rotate(simulator, "right") == :noop
   end
 
   test "places robot at origin facing NORTH", %{simulator: simulator} do
