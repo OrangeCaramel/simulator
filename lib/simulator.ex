@@ -37,9 +37,7 @@ defmodule Simulator do
     {:ok, %{is_robot_placed: false, robot: robot}}
   end
 
-  def handle_call({:place, {x, y, face}}, _from, state) do
-    new_robot_state = %{x: x, y: y, face: face}
-
+  def handle_call({:place, new_robot_state}, _from, state) do
     if is_move_valid?(new_robot_state) do
       Robot.update(state.robot, new_robot_state)
       new_state = Map.put(state, :is_robot_placed, true)
@@ -61,7 +59,7 @@ defmodule Simulator do
     current_robot_state = Robot.report(state.robot)
 
     rotation_value =
-      if direction == "right", do: @clockwise_rotation, else: @anti_clockwise_rotation
+      if direction == "RIGHT", do: @clockwise_rotation, else: @anti_clockwise_rotation
 
     new_face =
       Utils.convert_face_to_deg(current_robot_state.face)
