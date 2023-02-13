@@ -1,18 +1,31 @@
 defmodule InputUI do
   def start_link do
     Task.start_link(fn ->
-      IO.puts("Welcome to Robot Simulator!")
+      IO.puts(~S"""
+      Welcome to the Simulator!
+
+      Commands:
+        PLACE X,Y,[NORTH|EAST|WEST|SOUTH]
+        MOVE
+        LEFT
+        RIGHT
+        REPORT
+      """)
+
       loop()
     end)
   end
 
   defp loop() do
-    input =
-      IO.gets(">>> ")
-      |> String.trim()
-      |> String.upcase()
+    input = IO.gets("> ")
 
-    handle_input(input)
+    unless input == :eof do
+      String.trim(input)
+      |> String.upcase()
+      |> handle_input()
+    else
+      System.stop(0)
+    end
 
     loop()
   end

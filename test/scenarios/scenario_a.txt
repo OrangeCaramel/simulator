@@ -1,0 +1,13 @@
+# Scenario: Robot is placed at origin facing with the aim to reach to Northeast corner
+# Expected output: 4,4, EAST
+PLACE 0,0,NORTH
+MOVE
+MOVE
+MOVE
+MOVE
+RIGHT
+MOVE
+MOVE
+MOVE
+MOVE
+REPORT
