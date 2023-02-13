@@ -83,4 +83,22 @@ defmodule SimulatorTest do
     Simulator.move(simulator)
     assert Simulator.report(simulator) == %{x: 1, y: 2, face: "WEST"}
   end
+
+  test "ignores robot movement if going out of bounds", %{simulator: simulator} do
+    Simulator.place(simulator, {0, 0, "WEST"})
+    Simulator.move(simulator)
+    assert Simulator.report(simulator) == %{x: 0, y: 0, face: "WEST"}
+
+    Simulator.rotate(simulator, "left")
+    Simulator.move(simulator)
+    assert Simulator.report(simulator) == %{x: 0, y: 0, face: "SOUTH"}
+
+    Simulator.place(simulator, {4, 4, "NORTH"})
+    Simulator.move(simulator)
+    assert Simulator.report(simulator) == %{x: 4, y: 4, face: "NORTH"}
+
+    Simulator.rotate(simulator, "right")
+    Simulator.move(simulator)
+    assert Simulator.report(simulator) == %{x: 4, y: 4, face: "EAST"}
+  end
 end
