@@ -1,21 +1,21 @@
 # Simulator
 
-**TODO: Add description**
+An application which prompts for commands to simulate the movement of a robot in a 5x5 grid.
 
-## Installation
+| Environment | Version |
+| ----------- | --------|
+| Elixir      | 1.14.3  |
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `simulator` to your list of dependencies in `mix.exs`:
+## Building and Running Application
 
-```elixir
-def deps do
-  [
-    {:simulator, "~> 0.1.0"}
-  ]
-end
-```
+1. `mix compile`
+2. `mix release --overwrite`
+3. `_build/dev/rel/simulator/bin/simulator start`
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/simulator>.
+## Testing
 
+Run unit tests
+- `mix test`
+
+Test the application from a file
+- `_build/dev/rel/simulator/bin/simulator start < test/scenarios/scenario_a.txt`
