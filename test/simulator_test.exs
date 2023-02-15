@@ -101,4 +101,18 @@ defmodule SimulatorTest do
     Simulator.move(simulator)
     assert Simulator.report(simulator) == %{x: 4, y: 4, face: "EAST"}
   end
+
+  test "correct robot vector after one reverse", %{simulator: simulator} do
+    Simulator.place(simulator, %{x: 0, y: 0, face: "NORTH"})
+    Simulator.reverse(simulator)
+    assert Simulator.report(simulator) == %{x: 0, y: 0, face: "NORTH"}
+
+    Simulator.place(simulator, %{x: 2, y: 2, face: "NORTH"})
+    Simulator.reverse(simulator)
+    assert Simulator.report(simulator) == %{x: 2, y: 1, face: "NORTH"}
+
+    Simulator.rotate(simulator, "LEFT")
+    Simulator.reverse(simulator)
+    assert Simulator.report(simulator) == %{x: 3, y: 1, face: "WEST"}
+  end
 end

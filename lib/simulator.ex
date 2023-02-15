@@ -30,6 +30,10 @@ defmodule Simulator do
     GenServer.call(pid, {:report, nil})
   end
 
+  def reverse(pid) do
+    GenServer.call(pid, {:reverse, nil})
+  end
+
   # Server
   @spec init(:ok) :: {:ok, %{is_robot_placed: false, robot: pid}}
   def init(:ok) do
@@ -90,6 +94,14 @@ defmodule Simulator do
     else
       {:reply, :noop, state}
     end
+  end
+
+  def handle_call({:reverse, _}, from, state) do
+    handle_call({:rotate, "LEFT"}, from, state)
+    handle_call({:rotate, "LEFT"}, from, state)
+    handle_call({:move, nil}, from, state)
+    handle_call({:rotate, "LEFT"}, from, state)
+    handle_call({:rotate, "LEFT"}, from, state)
   end
 
   defp is_move_valid?(%{x: x, y: y}),

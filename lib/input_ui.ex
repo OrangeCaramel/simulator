@@ -10,6 +10,7 @@ defmodule InputUI do
         LEFT
         RIGHT
         REPORT
+        REVERSE
       """)
 
       loop()
@@ -47,6 +48,7 @@ defmodule InputUI do
   end
 
   defp handle_input("MOVE"), do: Simulator.move(:simulator_server)
+  defp handle_input("REVERSE"), do: Simulator.reverse(:simulator_server)
 
   defp handle_input("REPORT") do
     Simulator.report(:simulator_server)
